@@ -9,16 +9,16 @@ It is given in an arbitrary units (didn't find any more information in the NXP Z
 
 * Tx (Total Transmission) is the total number of transmissions (from other networks) detected during the scan
 * Failure (Transmission Failure) is the number of failed transmissions detected during the scan
-* Energy-Level measurement is a pointer to the first in the set of reported energy-level measurements (the value 255 indicates there is too much interference on the channel). Basically what is the Energy Level of the packet when Zigate receive the packets
+* Energy-Level measurement reports energy-level measurements (the value 255 indicates there is too much interferences on the channel).
 
-In short, higher the value is , indicates a high energy received, better it is.
+In short, higher the value is , indicates a high interferences, worst it is. Better to select an other channel with lower level.
 
 ## Graphical presentation
 
 You can get access to the Graphical presentation via the Web Admin Page in the Network Tab and Select Energy Level
 
 
-![Export Device List raw (json)](https://github.com/pipiche38/Domoticz-Zigate-Wiki/blob/master/Images/InterferenceLevels.png)
+![Export Device List raw (json)](https://github.com/pipiche38/Domoticz-Zigate-Wiki/blob/master/Images/InterferenceLevels2.png)
 
 
 Sources:

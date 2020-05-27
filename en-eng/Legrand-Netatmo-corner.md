@@ -68,6 +68,12 @@ When the led is red (not paired):
  
 ## Internals
 
+### How the Pairing works
+
+* At HUB reset (or OFF/ON), the HUB is sending a Write Attribute No Response and broadcast to Cluster 0x0000 , Attribute 0xf000 with a value of 0x00000000
+* During the pairing of a device, this device, will request in unicast mode via a Read Attribute each of the existing main powered devices (including the controler ) for Cluster 0x0000 Attrribute 0xf000 value
+* As described a little bit later 0x0000/0xf000 reflects the operation time since the latest reset or power on.
+
 ### Wireless devices
 
 * Not able to use the Tap-Tap for pairing the wireless with an equipment. 
@@ -193,6 +199,73 @@ After a main Power Off, On, the device is sending a Device Annoucement , in resp
 | Shutter switch with neutral | 0x0001 | 0x01/0x00 enable/disable Led if On | 0x10 |
 | Fil Pilote                | 0x0000 | 0x0001/0x0002 enable/disable fil pilote | 0x0x09 (16 bit data)
 
+__ATTENTION WIP / UNDER INVESTIGATIONS __
+
+##### Comamnd: 0x02
+
+* Device -> Hub
+* Format: FCF ( 0x15 ), Manuf ( 0x1021), SQN, 0x02, Value: 1 byte
+* Value:
+  * 1byte: 0x00
+  
+##### Command: 0x03
+
+* Device -> Hub
+* Format: FCF ( 0x15 ), Manuf ( 0x1021), SQN, 0x03, Value: 1 byte
+* Value:
+  * 1byte: 0xff
+  
+  
+##### Commande: 0x09 (Checked)
+
+* Device -> Hub
+* Format: FCF ( 0x15 ), Manuf ( 0x1021), SQN, 0x09, Value: 9 bytes
+* Value:
+  * 8 bytes are the MacAddress of the Source Device
+  * 1 bytes seems to be a counter
+  
+* Expect : Command 0x0c from the Hub to Device
+
+
+##### Command: 0x0a
+
+* Device -> Hub
+* Format: FCF ( 0x15 ),  Manuf ( 0x1021 ), SQN, 0x0a, Value: 12 bytes
+* Value: eg. fefe a4091f0000740400 0101
+  * 2 bytes: Most likely Group Membership
+  * 8 bytes: IEEE ( Target address ??? ): 
+  * 2 bytes: ( 0x0101 )
+  
+* Expect: Command 0x10 fromHub to Device
+
+##### Commande: 0x0c
+
+* Hub -> Device
+* Format: FCF ( 0x1d ), Manuf ( 0x1021 ), SQN, 0x0c, Value: 3 bytes
+* Value:
+  * 2 bytes: Most Likely Group Membership ( 0xfefe, 0xfdfe, 0xf6fe, 0xf4fe, 0xfffe )
+  * 1 byte: seems to correspond to counter from 0x09
+  
+##### Command: 0x0d
+
+* Device -> Hub
+* Format: FCF ( 0x1d ),  Manuf ( 0x1021 ), SQN, 0x0a, Value: 24 bytes
+* Value: eg. ffffffffffffffffffffffffffffffffffffffffffffffff
+
+  
+* Expect: Command 0x10 fromHub to Device  
+  
+##### Command: 0x10
+
+* Hub -> Device
+* Format: FCF ( 0x1d ), Manuf ( 0x1021 ), SQN, 0x10, Value: 11 bytes
+* Value: 00 0101 a4091f0000740400
+  * 1 byte: status
+  * 2 bytes: last 2 bytes from 0x0a command
+  * 8 bytes: IEEE 00 0101 a4 09 1f 00 00 74 04 00
+  
+  
+
 #### Cluster 0xfc40
 * Contirbution from @Thorgal789
 
@@ -236,7 +309,12 @@ After a main Power Off, On, the device is sending a Device Annoucement , in resp
 
 More informations/scripts .... can be found here: https://github.com/pipiche38/Capture-OTA-from-Wireshark
 
+## Pairing Mecansism
 
+The HUB seems in addition of having Time Server, seems to store in the 0x0000/0xf000 the time since the HUB has been powered on. This attribute server as of time of operation.
+At Pairing, the HUB is broadcasting this value to other devices, and the up coming devices is requesting this attribute also from the oher already connected devices. The Operating time ( 0x0000/0xf000) is reset to 0 after Power Off/On
+
+ 
 
 ## Other matters
 

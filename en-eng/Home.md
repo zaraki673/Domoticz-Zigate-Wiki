@@ -28,12 +28,14 @@ Here after is a non-exhaustive list of compatible devices. What is listed here i
 ## How-to
 
 * [Pair and provision a new Device](https://github.com/pipiche38/Domoticz-Zigate-Wiki/blob/master/en-eng/PairingDevice.md)
+* [Pairing and provisioning from a specific router](https://github.com/pipiche38/Domoticz-Zigate-Wiki/blob/master/en-eng/PairingFromRouter.md)
 * [Change the Zigbee Channel](https://github.com/pipiche38/Domoticz-Zigate-Wiki/blob/master/en-eng/Channel_Setting.md)
 * [Group Management](https://github.com/pipiche38/Domoticz-Zigate-Wiki/blob/master/en-eng/Group-Management.md)
 * [Upgrading device firmware](https://github.com/pipiche38/Domoticz-Zigate-Wiki/blob/master/en-eng/Device-Firmware-Update.md)
 * [Upgrading Firmware of Zigate](https://github.com/pipiche38/Domoticz-Zigate-Wiki/blob/master/en-eng/Zigate-flash-firmware.md)
 * [Plugin Parameters](https://github.com/pipiche38/Domoticz-Zigate-Wiki/blob/master/en-eng/PluginConf.json.md)
 * [Energy Level Reports](https://github.com/pipiche38/Domoticz-Zigate-Wiki/blob/master/en-eng/EnergyLevels.md)
+* [Bindings](https://github.com/pipiche38/Domoticz-Zigate-Wiki/blob/master/en-eng/Binding_Legrand.md)
 
 ## What to do if the device doesn't behave correctly
 
@@ -63,3 +65,6 @@ Here after is a non-exhaustive list of compatible devices. What is listed here i
 * [How to Configure ZiGate in Zigbee Sniffer](https://github.com/pipiche38/Domoticz-Zigate-Wiki/blob/master/en-eng/Zigate-Sniffer.md)
 * [A Guide to Wireless range and Repeater](https://support.smartthings.com/hc/en-us/articles/209963206-A-guide-to-wireless-range-and-repeaters)
 * [Coexistence between Wifi and Zigbee](https://github.com/pipiche38/Domoticz-Zigate-Wiki/blob/master/en-eng/Co-existence-of-IEEE-802.15.4-at-2.4-GHz-and-Zigbee.md)
+* [Pairing devices Aqara/Xiaomi](https://community.hubitat.com/t/xiaomi-aqara-devices-pairing-keeping-them-connected/623)
+* [Cohexistence Xiaomi with other brands](https://community.hubitat.com/t/xiaomi-aqara-devices-pairing-keeping-them-connected/623)
+

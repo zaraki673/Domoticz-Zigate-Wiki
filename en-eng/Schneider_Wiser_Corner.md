@@ -255,16 +255,16 @@ Cluster Out 2: 0402 (Temperature Measurement)
 
 ### Cluster
 
-0x0000/0xe011 Device Status
-0x0000/0xe010 Current Mode
-0x0000/0xe050 COMMISSIONING 
-0x0000/0x5011 ATTRIBUTE_BASIC_LANGUAGE
+* 0x0000/0xe011 Device Status
+* 0x0000/0xe010 Current Mode
+* 0x0000/0xe050 COMMISSIONING 
+* 0x0000/0x5011 ATTRIBUTE_BASIC_LANGUAGE
 
 
-0x0201/0xe010 ATTRIBUTE_THERMOSTAT_ZONE_MODE
-0x0201/0xe011 HACT Configuration
+* 0x0201/0xe010 ATTRIBUTE_THERMOSTAT_ZONE_MODE
+* 0x0201/0xe011 HACT Configuration
 
-0x0201/0xe020 Fil Pilot Mode
+* 0x0201/0xe020 Fil Pilot Mode
 
 
 
@@ -433,6 +433,10 @@ At that stage, someone set a target temperature on the Application managing the 
 ## Decoding Cluster 0x0201 on Attribute 0xe011
 
 ATTRIBUTE_THERMOSTAT_HACT_CONFIG
+*  0x00 - Conventional (ON/OFF)
+* 0x02 - Setpoint (set temperature)
+* 0x03 - FIP - mode fil pilote 
+
 
 
 ## Reporting Configuration 
@@ -508,9 +512,38 @@ ATTRIBUTE_THERMOSTAT_HACT_CONFIG
 201_e031_1_normal_reportable_change=1
 ```
 
+# Attribut Thermostat
+| cluster | cluster name | Attribut | purpose | value | type|Read / Write |
+|---|---|---|---|---|---|---|
+|0x0000 | Basic | 0x0005 | Mode Identifier |EH-ZB-RTS |0x42| Read|
+|0x0000 | Basic | 0x0007 | Power source | 0x03 |0x30 (8bits enum)| Read|
+|0x0000 | Basic | 0x0020 | Location Description| Zigate zone |0x342| Write|
+|0x0000 | Basic | 0x0013 | Alarm Mask | 0x00 |0x18 (8bits bitmap)| Read|
+|0x0000 | Basic | 0xe000 | brickSWVersion | SNP.R.04.01.14 |0x42| Read|
+|0x0000 | Basic | 0xe001 | applSWVersion | RTS.R.04.01.00 |0x42| Read|
+|0x0000 | Basic | 0xe002 | version  | RTS.R.00.00.2 |0x42| Read|
+|0x0000 | Basic | 0xe050 | Commissioned  | 0x01 |0x10| Write|
+|0x0000 | Basic | 0x5011 | Language  | en,fr,... |0x42| Write|
+||||||||
+|0x0001 | Power Configuration | 0x0035 | Alarm Mask  | 0x01 |0x18 (8bits bitmap)| Read|
+|0x0001 | Power Configuration | 0x0036 | Battery Voltage Minimum Threshold  | voltage |0x20| Read|
+|0x0001 | Power Configuration | 0x0020 | Battery Voltage  | voltage |0x20| Read|
+||||||||
+|0x0201 | Thermostat | 0x0012 | Occuppied Heating Setpoint  | Temperature |0x29| Read to Coordinnator|
+|0x0201 | Thermostat | 0x0015 | Min Heating Setpoint  | Temperature |0x29| Read to Coordinnator|
+|0x0201 | Thermostat | 0x0016 | Max Heating Setpoint  | Temperature |0x29| Read to Coordinnator|
+|0x0201 | Thermostat | 0xe010 | Thermostat Mode  | 0x01 (Manual) |0x30| Read to Coordinnator|
+||||||||
+|0x0402 | Thermostat Measurement | 0x0000 | Measure Value  | Temperature |0x29| Read|
 
 
-  
+# thermostat commands
+
+| cluster | cluster name | command | purpose | payload | 
+|---|---|---|---|---|
+|0x0201 | Thermostat | 0xe0 | setpoint | zone 0x01 + temperature in centi degree (uint16)  + end 0xff |
+|0x0201 | Thermostat | 0xe1 | set fip mode | zone 0x01 + fip mode (0-confort, 1-confort -1, 2 confort -2, 3-eco, 4-FrostP, 5-off) + prio  (0x01)  end 0xff |
+
   Sources of information:
   * https://studylibfr.com/doc/2872316/compteur-d-%C3%A9nergie-sans-fil-s%C3%A9rie-em4300
   * https://damrexelprod.blob.core.windows.net/medias/1951d12a-39f3-4317-86c8-f95b6fb13ac5
